@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PizzaBlock({ title, price, imageUrl, types, sizes }) {
+function CardBlock({ title, price, imageUrl, types, sizes }) {
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
   const typeNames = ['тонкое', 'традиционное'];
@@ -11,15 +11,21 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
       <div className="pizza-block__selector">
         <ul>
           {types.map((type, i) => (
-            <li onClick={() => setActiveType(i)} className={activeType === i ? 'active' : ''}>
+            <li
+              key={type}
+              onClick={() => setActiveType(i)}
+              className={activeType === i ? 'active' : ''}>
               {typeNames[type]}
             </li>
           ))}
         </ul>
         <ul>
-          {sizes.map((value, i) => (
-            <li onClick={() => setActiveSize(i)} className={activeSize === i ? 'active' : ''}>
-              {value} см.
+          {sizes.map((size, i) => (
+            <li
+              key={size}
+              onClick={() => setActiveSize(i)}
+              className={activeSize === i ? 'active' : ''}>
+              {size} см.
             </li>
           ))}
         </ul>
@@ -46,4 +52,4 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
   );
 }
 
-export default PizzaBlock;
+export default CardBlock;
