@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PizzaBlock({ title, price, imageUrl, types, sizes }) {
+function CardBlock({ title, price, imageUrl, types, sizes }) {
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
   const typeNames = ['тонкое', 'традиционное'];
@@ -52,4 +52,4 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
   );
 }
 
-export default PizzaBlock;
+export default CardBlock;
