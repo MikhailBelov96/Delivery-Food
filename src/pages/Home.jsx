@@ -32,7 +32,7 @@ const Home = () => {
     dispatch(setCurrentPage(page));
   };
 
-  const fetchGoods = () => {
+  const fetchGoods = async () => {
     setIsLoading(true);
 
     const category = categoryId > 0 ? `category=${categoryId}` : '';
@@ -40,14 +40,19 @@ const Home = () => {
     const sortBy = sort.sortProperty.replace('+', '');
     const order = sort.sortProperty.includes('+') ? 'asc' : 'desc';
 
-    axios
-      .get(
+    try {
+      const res = await axios.get(
         `https://6467661d2ea3cae8dc2d9f13.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
+      );
+      setItems(res.data);
+    } catch (error) {
+      console.log('Error', error);
+      alert('Cannot load items');
+    } finally {
+      setIsLoading(false);
+    }
+
+    window.scrollTo(0, 0);
   };
 
   // If parametrs were changed and first render was completed,
@@ -83,8 +88,6 @@ const Home = () => {
 
   // If the first render was made, then send request of goods
   React.useEffect(() => {
-    window.scrollTo(0, 0);
-
     if (!isSearch.current) {
       fetchGoods();
     }
