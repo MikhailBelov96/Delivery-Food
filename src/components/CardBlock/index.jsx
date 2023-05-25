@@ -18,7 +18,7 @@ function CardBlock({ id, title, price, imageUrl, types, sizes }) {
       price,
       imageUrl,
       type: typeNames[activeType],
-      size: activeSize,
+      size: sizes[activeSize],
     };
     dispatch(addItem(item));
   };
