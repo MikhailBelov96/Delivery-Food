@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { setItems } from '../redux/slices/goodSlice';
 import Categories from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
 import Skeleton from '../components/CardBlock/Skeleton';
@@ -19,10 +18,10 @@ const Home = () => {
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
 
-  const items = useSelector((state) => state.goodReducer.items);
   const { categoryId, sort, currentPage } = useSelector((state) => state.filterReducer);
 
   const { searchValue } = React.useContext(SearchContext);
+  const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const onChangeCategory = (id) => {
@@ -42,11 +41,12 @@ const Home = () => {
     const order = sort.sortProperty.includes('+') ? 'asc' : 'desc';
 
     try {
-      const { data } = await axios.get(
+      const res = await axios.get(
         `https://6467661d2ea3cae8dc2d9f13.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
       );
-      dispatch(setItems(data));
+      setItems(res.data);
     } catch (error) {
+      setIsLoading(false);
       console.log('Error', error);
       alert('Cannot load items');
     } finally {
