@@ -11,8 +11,6 @@ function CardBlock({ id, title, price, imageUrl, types, sizes }) {
   const [activeSize, setActiveSize] = React.useState(0);
   const addedCount = cartItem ? cartItem.count : 0;
 
-  console.log(cartItem);
-
   const onClickAdd = () => {
     const item = {
       id,
